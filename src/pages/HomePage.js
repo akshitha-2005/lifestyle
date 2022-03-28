@@ -6,13 +6,6 @@ import { SHOP_DATA } from "../shop-data";
 import { async } from "@firebase/util";
 
 function HomePage() {
-    async function adddata() {
-        try {
-            await addDoc(collection(firebaseDB,"users"),{name: Akshitha, age: 22});
-        }catch(error){
-            console.log(error);
-        }
-    }
 
     async function getData() {
         try {
@@ -26,7 +19,6 @@ function HomePage() {
 
                 productsArray.push(obj);
             });
-            console.log(productsArray);
         } catch(error){
             console.log(error);
         }
@@ -48,8 +40,7 @@ function HomePage() {
     return(
         <Layout>
             <h1>Home</h1>
-            <button onClick={adddata}>add data to firebase</button>
-            <button onClick={getData}>get data from firebase</button>
+  
             {/* <button onClick={addProductsData}>add data to firebase</button> */}
 
         </Layout>
