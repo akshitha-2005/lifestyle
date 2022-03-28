@@ -1,0 +1,20 @@
+.header {
+    position: fixed;
+    top:0;
+    left:0;
+    right:0;
+    z-index: 2;
+}
+.navbar {
+    background-color: #003F5C !important;
+}
+.navbar-brand{
+    color: white !important;
+    font-weight: bold;
+}
+.nav-link {
+    color: white !important;
+}
+.content {
+    padding-top: 80px;
+}
