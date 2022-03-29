@@ -6,7 +6,7 @@
     z-index: 2;
 }
 .navbar {
-    background-color: #003F5C !important;
+    background-color: black !important;
 }
 .navbar-brand{
     color: white !important;
@@ -17,4 +17,16 @@
 }
 .content {
     padding-top: 80px;
+}
+button {
+    background-color: aquamarine;
+    box-shadow: none;
+    border: 1px solid rgba(255, 255, 255, 0.815);
+    color: black;
+    padding: 5px;
+
+}
+
+button:hover{
+    background-color: tomato;
 }
