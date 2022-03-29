@@ -92,6 +92,7 @@ function HomePage() {
           })}
         </div>
       </div>
+      <h1>Hey</h1>
       {/* <button onClick={adddata}>add data</button> */}
 
       {/* <button onClick={addProductsData}>add data to firebase</button> */}
