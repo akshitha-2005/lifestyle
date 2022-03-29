@@ -4,6 +4,7 @@ import { collection, addDoc, getDocs } from "firebase/firestore";
 import firebaseDB from "../firebaseConfig";
 import { fireproducts } from "../firecommerce";
 import { async } from "@firebase/util";
+import { useNavigate} from "react-router-dom";
 
 function HomePage() {
   // async function adddata() {
@@ -14,6 +15,7 @@ function HomePage() {
   //     }
   // }
   const [products, setProducts] = useState([]);
+  const navigate = useNavigate()
 
   useEffect(() => {
     getData();
@@ -68,7 +70,9 @@ function HomePage() {
                     <h2>Rs.{product.price}</h2>
                     <div className="d-flex">
                       <button className="mx-2">ADD TO CART</button>
-                      <button>VIEW</button>
+                      <button onClick={()=>{
+                        navigate(`/productinfo/${product.id}`)
+                      }}>VIEW</button>
                     </div>
                   </div>
                 </div>
