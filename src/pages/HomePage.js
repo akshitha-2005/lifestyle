@@ -5,6 +5,7 @@ import firebaseDB from "../firebaseConfig";
 import { fireproducts } from "../firecommerce";
 import { async } from "@firebase/util";
 import { useNavigate} from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 function HomePage() {
   // async function adddata() {
@@ -15,6 +16,8 @@ function HomePage() {
   //     }
   // }
   const [products, setProducts] = useState([]);
+  const {cartItems} = useSelector(state=>state.cartReducer)
+  const dispatch = useDispatch()
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -47,6 +50,14 @@ function HomePage() {
   //         }
   //     })
   // }
+  useEffect(() =>{
+    localStorage.setItem('cartItems',JSON.stringify(cartItems));
+  },[cartItems])
+
+  const addToCart = (product)=>{
+    dispatch({type:'ADD_TO_CART' , payload:product})
+    
+  }
 
   return (
     <Layout>
