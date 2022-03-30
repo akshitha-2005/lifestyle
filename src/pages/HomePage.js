@@ -17,6 +17,7 @@ function HomePage() {
   // }
   const [products, setProducts] = useState([]);
   const {cartItems} = useSelector(state=>state.cartReducer)
+  const [loading, setLoading] = useState(false)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -25,6 +26,7 @@ function HomePage() {
   }, []);
   async function getData() {
     try {
+      setLoading(true);
       const users = await getDocs(collection(firebaseDB, "products"));
       const productsArray = [];
       users.forEach((doc) => {
@@ -34,10 +36,12 @@ function HomePage() {
         };
 
         productsArray.push(obj);
+        setLoading(false)
       });
       setProducts(productsArray);
     } catch (error) {
       console.log(error);
+      setLoading(false)
     }
   }
 
@@ -60,7 +64,7 @@ function HomePage() {
   }
 
   return (
-    <Layout>
+    <Layout loading={loading}>
       <div className="container">
         <div className="row">
           {products.map((product) => {
