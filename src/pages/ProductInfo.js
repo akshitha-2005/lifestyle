@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import Layout from "../components/Layout";
 import { collection, getDoc, doc } from "firebase/firestore";
 import firebaseDB from "../firebaseConfig";
-import { getDefaultNormalizer } from "@testing-library/react";
 import { async } from "@firebase/util";
 import { useParams } from "react-router-dom";
 
@@ -51,6 +50,7 @@ function ProductInfo() {
           </div>
         </div>
       </div>
+
     </Layout>
   );
 }

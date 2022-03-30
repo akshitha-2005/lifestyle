@@ -1,13 +1,33 @@
 import React, { useState } from "react";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import Loader from '../components/Loader';
+import { toast } from "react-toastify";
 
 function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [cpassword, setCPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const auth = getAuth();
+
+  const register=async() => {
+    try {
+      setLoading(true)
+      const result = await createUserWithEmailAndPassword(auth,email,password)
+      console.log(result)
+      setLoading(false)
+      toast.success('Registration successfull')
+    } catch (error) {
+      console.log(error)
+      toast.error('Registration failed')
+      setLoading(false)
+    }
+  }
   return (
     <div className="register-parent">
+      {loading && (<Loader />)}
       <div className="register-top">
 
       </div>
@@ -56,7 +76,7 @@ function RegisterPage() {
               }}
             />
 
-            <Button className="my-3" variant="contained" color="success">
+            <Button className="my-3" variant="contained" color="success" onClick={register}>
               REGISTER
             </Button>
             <hr />
