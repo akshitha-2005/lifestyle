@@ -80,7 +80,7 @@ function HomePage() {
                   <div className="product-actions">
                     <h2>Rs.{product.price}</h2>
                     <div className="d-flex">
-                      <button className="mx-2">ADD TO CART</button>
+                      <button className="mx-2" onClick={()=>addToCart(product)}>ADD TO CART</button>
                       <button onClick={()=>{
                         navigate(`/productinfo/${product.id}`)
                       }}>VIEW</button>
@@ -92,7 +92,7 @@ function HomePage() {
           })}
         </div>
       </div>
-      <h1>Hey</h1>
+    
       {/* <button onClick={adddata}>add data</button> */}
 
       {/* <button onClick={addProductsData}>add data to firebase</button> */}
