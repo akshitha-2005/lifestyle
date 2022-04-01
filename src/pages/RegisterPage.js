@@ -6,6 +6,7 @@ import Loader from '../components/Loader';
 import { toast } from "react-toastify";
 
 function RegisterPage() {
+  const [name,setName ] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [cpassword, setCPassword] = useState("");
@@ -19,6 +20,10 @@ function RegisterPage() {
       console.log(result)
       setLoading(false)
       toast.success('Registration successfull')
+      setName('')
+      setEmail('')
+      setPassword('')
+      setCPassword('')
     } catch (error) {
       console.log(error)
       toast.error('Registration failed')
@@ -48,28 +53,43 @@ function RegisterPage() {
 
             <hr />
 
+            
             <input
               type="text"
+              required
               className="form-control"
-              placeholder="email"
+              placeholder="Name"
+              value={name}
+              onChange={(e) => {
+                setName(e.target.value);
+              }}
+            />
+
+            <input
+              type="text"
+              required
+              className="form-control"
+              placeholder="Email"
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
             />
             <input
-              type="text"
+              type="password"
+              required
               className="form-control"
-              placeholder="password"
+              placeholder="Password"
               value={password}
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
             />
             <input
-              type="text"
+              type="password"
+              required
               className="form-control"
-              placeholder="confirm password"
+              placeholder="Confirm Password"
               value={cpassword}
               onChange={(e) => {
                 setCPassword(e.target.value);

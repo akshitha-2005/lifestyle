@@ -4,8 +4,9 @@ import { collection, addDoc, getDocs } from "firebase/firestore";
 import firebaseDB from "../firebaseConfig";
 import { fireproducts } from "../firecommerce";
 import { async } from "@firebase/util";
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { Button } from "@mui/material";
 
 function HomePage() {
   // async function adddata() {
@@ -16,10 +17,10 @@ function HomePage() {
   //     }
   // }
   const [products, setProducts] = useState([]);
-  const {cartItems} = useSelector(state=>state.cartReducer)
-  const [loading, setLoading] = useState(false)
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const { cartItems } = useSelector((state) => state.cartReducer);
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getData();
@@ -36,12 +37,12 @@ function HomePage() {
         };
 
         productsArray.push(obj);
-        setLoading(false)
+        setLoading(false);
       });
       setProducts(productsArray);
     } catch (error) {
       console.log(error);
-      setLoading(false)
+      setLoading(false);
     }
   }
 
@@ -54,14 +55,13 @@ function HomePage() {
   //         }
   //     })
   // }
-  useEffect(() =>{
-    localStorage.setItem('cartItems',JSON.stringify(cartItems));
-  },[cartItems])
+  useEffect(() => {
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  }, [cartItems]);
 
-  const addToCart = (product)=>{
-    dispatch({type:'ADD_TO_CART' , payload:product})
-    
-  }
+  const addToCart = (product) => {
+    dispatch({ type: "ADD_TO_CART", payload: product });
+  };
 
   return (
     <Layout loading={loading}>
@@ -69,7 +69,7 @@ function HomePage() {
         <div className="row">
           {products.map((product) => {
             return (
-              <div className="col-md-4">
+              <div className="col-md-3">
                 <div className="m-2 p-1 product position-relative">
                   <div className="product-content">
                     <p>{product.name}</p>
@@ -84,10 +84,16 @@ function HomePage() {
                   <div className="product-actions">
                     <h2>Rs.{product.price}</h2>
                     <div className="d-flex">
-                      <button className="mx-2" onClick={()=>addToCart(product)}>ADD TO CART</button>
-                      <button onClick={()=>{
-                        navigate(`/productinfo/${product.id}`)
-                      }}>VIEW</button>
+                    <Button variant="outlined">ADD TO CART</Button>
+                    &nbsp;&nbsp;&nbsp;
+                    
+                      <Button variant="outlined"
+                        onClick={() => {
+                          navigate(`/productinfo/${product.id}`);
+                        }}
+                      >
+                        VIEW
+                      </Button>
                     </div>
                   </div>
                 </div>
@@ -96,7 +102,7 @@ function HomePage() {
           })}
         </div>
       </div>
-    
+
       {/* <button onClick={adddata}>add data</button> */}
 
       {/* <button onClick={addProductsData}>add data to firebase</button> */}

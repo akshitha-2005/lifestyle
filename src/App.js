@@ -1,11 +1,14 @@
-import logo from "./logo.svg";
+
 import "./App.css";
 import HomePage from "./pages/HomePage";
 import { Route, BrowserRouter, Routes, Navigate } from "react-router-dom";
+
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import ProductInfo from "./pages/ProductInfo";
 import CartPage from "./pages/CartPage";
+import OrdersPage from "./pages/OrdersPage";
+
 
 import "./stylesheets/layout.css";
 import "./stylesheets/products.css";
@@ -22,12 +25,15 @@ function App() {
           <Route path="/" exact element={<HomePage />} />
           <Route path="/productinfo/:productid" exact element={<ProductInfo />}/>
           <Route path="/cart" exact element={<CartPage />} />
+          <Route path="/orders" exact element={<OrdersPage />} />
 
           <Route path="/login" exact element={<LoginPage />} />
           <Route path="/register" exact element={<RegisterPage />} />
+        
+
         </Routes>
       </BrowserRouter>
-    </div>
+      </div>
   );
 }
 

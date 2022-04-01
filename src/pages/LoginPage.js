@@ -4,6 +4,12 @@ import { Link } from "react-router-dom";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { toast } from "react-toastify";
 import Loader from "../components/Loader";
+import {
+  signInAuthUserWithEmailAndPassword,
+  signInWithGoogle,
+  signInWithGooglePopup
+} from "../firebaseConfig";
+
 
 function LoginPage() {
   const [email, setEmail] = useState("");
@@ -11,12 +17,22 @@ function LoginPage() {
   const [loading, setLoading] = useState(false);
   const auth = getAuth();
 
+  const signInWithGoogle = async () => {
+    await signInWithGooglePopup();
+    const res = await signInAuthUserWithEmailAndPassword(auth, email, password);
+    window.location.href = "/";
+  };
+
+
   const login = async () => {
     try {
       setLoading(true);
       const result = await signInWithEmailAndPassword(auth, email, password);
+      
+ 
       localStorage.setItem("currentUser", JSON.stringify(result));
       setLoading(false);
+      
       toast.success("Login successfull");
       window.location.href = "/";
     } catch (error) {
@@ -39,16 +55,16 @@ function LoginPage() {
             <input
               type="text"
               className="form-control"
-              placeholder="email"
+              placeholder="Email"
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
             />
             <input
-              type="text"
+              type="password"
               className="form-control"
-              placeholder="password"
+              placeholder="Password"
               value={password}
               onChange={(e) => {
                 setPassword(e.target.value);
@@ -64,7 +80,9 @@ function LoginPage() {
               LOGIN
             </Button>
             <hr />
-            <Link to="/register">Click Here To Register</Link>
+           
+
+            <Button variant="contained" onClick={signInWithGoogle}>Sign in with Google</Button>
           </div>
         </div>
 
