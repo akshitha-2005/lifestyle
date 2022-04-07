@@ -49,7 +49,7 @@ function RegisterPage() {
         </div>
         <div className="col-md-4 z1">
           <div className="register-form">
-            <h2>Register</h2>
+            <h2>Sign up</h2>
 
             <hr />
 

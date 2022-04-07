@@ -1,15 +1,16 @@
-import React from "react";
-
+import React, { useState, useEffect } from "react";
+import Layout from "../components/Layout";
+import firebaseDB from "../firebaseConfig";
+import { getDocs, collection } from "firebase/firestore";
 
 function OrdersPage() {
   
-  return ( 
-    <div>
-    <h2>Orders Page</h2>
-    </div>
-  )
   
-}
-    
+  return (
+     <Layout>
       
+    </Layout>
+  );
+}
+
 export default OrdersPage;

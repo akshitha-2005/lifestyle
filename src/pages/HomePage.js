@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@mui/material";
 
+
 function HomePage() {
   // async function adddata() {
   //     try{
@@ -62,6 +63,8 @@ function HomePage() {
   const addToCart = (product) => {
     dispatch({ type: "ADD_TO_CART", payload: product });
   };
+  
+
 
   return (
     <Layout loading={loading}>
@@ -73,6 +76,7 @@ function HomePage() {
                 <div className="m-2 p-1 product position-relative">
                   <div className="product-content">
                     <p>{product.name}</p>
+                    </div>
                     <div className="text-center">
                       <img
                         src={product.imageURL}
@@ -80,11 +84,11 @@ function HomePage() {
                         className="product-img"
                       />
                     </div>
-                  </div>
+                  
                   <div className="product-actions">
                     <h2>Rs.{product.price}</h2>
                     <div className="d-flex">
-                    <Button variant="outlined">ADD TO CART</Button>
+                    <Button variant="outlined" onClick={() => addToCart(product)}>ADD TO CART</Button>
                     &nbsp;&nbsp;&nbsp;
                     
                       <Button variant="outlined"

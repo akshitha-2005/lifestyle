@@ -2,11 +2,14 @@
      box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
 }
 .product-img{
-    height: 200px;
-    width: 150px;
+    height: 220px;
+    width: 200px;
 }
 .product:hover .product-actions{
     opacity: 1;
+}
+.product-content {
+    margin-left: 50px;
 }
 .product-actions {
     position: absolute;
@@ -19,12 +22,21 @@
     right: 0;
     opacity: 0;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.781);
+    background-color: rgba(0, 0, 0, 0.8);
     color: white;
     font-weight: bold !important;
 }
+
 .product-info-img{
     height: 70vh;
+  
+}
+
+.box .container{
+    display: flex; 
+}
+.center {
+    padding-left: 30px;
 }
 
 .total-amount {

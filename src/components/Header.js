@@ -1,15 +1,19 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { FaBars, FaCartPlus } from "react-icons/fa";
+import { FaBars, FaCartPlus, FaUser } from "react-icons/fa";
+import { useSelector } from "react-redux";
 
 
 function Header() {
+  const { cartItems } = useSelector((state) => state.cartReducer);
+  const { user } = JSON.parse(localStorage.getItem("currentUser"));
+
 
 
   const logout = () => {
     localStorage.removeItem("currentUser");
     // window.location.reload();
-    window.location.href = "/";
+    window.location.href = "/login";
 
   };
 
@@ -37,21 +41,22 @@ function Header() {
             <ul className="navbar-nav ms-auto">
               <li className="nav-item">
                 <Link className="nav-link active" aria-current="page" to="/">
+                <FaUser /> {user.email.substring(0, user.email.length - 10)} 
                 </Link>
               </li>
               <li className="nav-item">
-              <Link className="nav-link" to="/register">
+              {/* <Link className="nav-link" to="/register">
                   Sign up
-                </Link>
+                </Link> */}
               </li>
               <li className="nav-item">
-              <Link className="nav-link" to="/login">
-                  Login
+              <Link className="nav-link" to="/orders">
+                  Orders
                 </Link>
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/cart">
-                  <FaCartPlus />
+                  <FaCartPlus /> {cartItems.length}
                 </Link>
               </li>
               <li className="nav-item">

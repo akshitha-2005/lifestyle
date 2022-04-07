@@ -5,4 +5,4 @@ const rootReducer = combineReducers({
     cartReducer : cartReducer,
 })
 
-export default rootReducer
+export default rootReducer;
