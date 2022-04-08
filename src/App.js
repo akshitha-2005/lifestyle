@@ -46,6 +46,6 @@ export const ProtectedRoutes = ({ children }) => {
   if (localStorage.getItem.apply("currentUser")) {
     return children;
   } else {
-    return <Navigate to="/login" />;
+    return <Navigate to="/" />;
   }
 };

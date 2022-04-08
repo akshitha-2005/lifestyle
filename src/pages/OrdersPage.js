@@ -8,7 +8,7 @@ function OrdersPage() {
   
   return (
      <Layout>
-      
+      <h1>YOUR ORDERS</h1>
     </Layout>
   );
 }

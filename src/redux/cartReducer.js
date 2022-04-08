@@ -10,7 +10,7 @@ export const cartReducer = (state = initialState, action) => {
         ...state,
         cartItems: [...state.cartItems, action.payload],
       };
-    }
+  }
     case "DELETE_FROM_CART": {
       return {
         ...state,
