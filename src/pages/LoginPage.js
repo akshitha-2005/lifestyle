@@ -20,7 +20,7 @@ function LoginPage() {
   const signInWithGoogle = async () => {
     await signInWithGooglePopup();
     const res = await signInAuthUserWithEmailAndPassword(auth, email, password);
-    window.location.href = "/";
+    window.location.href = "/home";
   };
 
 
@@ -34,7 +34,7 @@ function LoginPage() {
       setLoading(false);
       
       toast.success("Login successfull");
-      window.location.href = "/";
+      window.location.href = "/home";
     } catch (error) {
       console.log(error);
       toast.error("Login failed");

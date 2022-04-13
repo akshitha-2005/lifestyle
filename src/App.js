@@ -8,6 +8,8 @@ import RegisterPage from "./pages/RegisterPage";
 import ProductInfo from "./pages/ProductInfo";
 import CartPage from "./pages/CartPage";
 import OrdersPage from "./pages/OrdersPage";
+import PaymentPage from "./pages/PaymentPage";
+
 
 
 
@@ -25,13 +27,16 @@ function App() {
       <ToastContainer />
       <BrowserRouter>
         <Routes>
-          <Route path="/" exact element={<HomePage />} />
+          <Route path="/" exact element={<RegisterPage />} />
+          <Route path="/home" exact element={<HomePage />} />
           <Route path="/productinfo/:productid" exact element={<ProductInfo />}/>
           <Route path="/cart" exact element={<CartPage />} />
           <Route path="/orders" exact element={<OrdersPage />} />
 
           <Route path="/login" exact element={<LoginPage />} />
-          <Route path="/register" exact element={<RegisterPage />} />
+          <Route path="/payments" exact element={<PaymentPage />} />
+        
+          
         
 
         </Routes>
