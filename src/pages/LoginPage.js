@@ -11,6 +11,7 @@ import {
 } from "../firebaseConfig";
 
 
+
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -83,6 +84,13 @@ function LoginPage() {
            
 
             <Button variant="contained" onClick={signInWithGoogle}>Sign in with Google</Button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        
+            <Link to="/" className="btn btn-primary">
+                  REGISTER
+                </Link>
+               
+               
           </div>
         </div>
 

@@ -8,13 +8,12 @@ import firebaseDB from "../firebaseConfig";
 import { toast } from "react-toastify";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
-
-
 import StripeCheckout from "react-stripe-checkout";
+
 
 function CartPage() {
   const { cartItems } = useSelector((state) => state.cartReducer);
-  const [totalAmount, setTotalAmount] = useState(0);
+ 
 
   // const [name, setName] = useState("");
   // const [address, setAddress] = useState("");
@@ -52,11 +51,14 @@ function CartPage() {
   }, [formErrors]);
   const validate = (values) => {
     const errors = {};
+    const regex = "[a-zA-Z]";
     
 
     if (!values.name) {
-      errors.name = "Name is required!";
-    }
+      errors.name = "Name is required!"; }
+    // } else if (!regex.test(values.name)) {
+    //   errors.name = "This is not a valid format";
+    // }
     if (!values.address) {
       errors.address = "Address is required!";
     }
@@ -83,26 +85,67 @@ function CartPage() {
     console.log(token);
   };
 
+  var totalCartPrice = 0;
+
   const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    let temp = 0;
-    cartItems.forEach((cartItem) => {
-      temp = temp + cartItem.price;
-    });
-    setTotalAmount(temp);
-  }, [cartItems]);
+  // useEffect(() => {
+  //   let temp = 0;
+  //   cartItems.forEach((cartItem) => {
+  //     temp = temp + cartItem.price;
+  //   });
+  //   setTotalAmount(temp);
+  // }, [cartItems]);
 
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
 
+  useEffect(() => {
+    localStorage.setItem("formValues", JSON.stringify(formValues));
+  }, [formValues]);
+
   const deleteFromCart = (product) => {
     dispatch({ type: "DELETE_FROM_CART", payload: product });
   };
 
+  const addQuantity = (product) => {
+    dispatch({ type: "ADD_QUANTITY", payload: product });
+  };
+
+  const subtractQuantity = (product) => {
+    dispatch({ type: "SUB_QUANTITY", payload: product });
+  };
+
+  const placeOrder = async () => {
+    const  {
+      name,
+      address,
+      city,
+      pincode,
+      number
+    } = formValues
+    console.log(formValues);
+
+    const orderInfo = {
+      cartItems,
+      formValues,
+      email: JSON.parse(localStorage.getItem("currentUser")).user.email,
+      userid: JSON.parse(localStorage.getItem("currentUser")).user.uid,
+    };
+
+    try {
+      setLoading(true);
+      const result = await addDoc(collection(firebaseDB, "orders"), orderInfo);
+      setLoading(false);
+      toast.success("Order placed successfully");
+    } catch (error) {
+      setLoading(false);
+      toast.error("Order failed");
+    }
+  };
   
 
   return (
@@ -113,11 +156,13 @@ function CartPage() {
             <th>Image</th>
             <th>Name</th>
             <th>Price</th>
+            <th>Quantity</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
           {cartItems.map((item) => {
+            totalCartPrice += item.price * item.quantity;
             return (
               <tr>
                 <td>
@@ -126,6 +171,15 @@ function CartPage() {
 
                 <td>{item.name}</td>
                 <td>{item.price}</td>
+                <td>
+                <div className="input-group">
+                <button onClick={() => subtractQuantity(item)}>-</button>
+                 &nbsp;&nbsp;
+               <button>{item.quantity}</button>
+               &nbsp;&nbsp;
+                <button onClick={() => addQuantity(item)}>+</button>
+                </div>
+                </td>
 
                 <td>
                   <FaTrash onClick={() => deleteFromCart(item)} />
@@ -136,19 +190,18 @@ function CartPage() {
         </tbody>
       </table>
       <div className="d-flex justify-content-end">
-        <Button variant="contained" color="success">
-          Total Amount = Rs.{totalAmount}
-        </Button>
+        <button type="button" class="btn btn-warning">Total Amount = Rs. {totalCartPrice}</button>
       </div>
 
       <div className="d-flex justify-content-end mt-3">
         <button
           type="button"
-          class="btn btn-primary"
+          class="btn btn-success"
           data-bs-toggle="modal"
           data-bs-target="#exampleModal"
         >
-          Proceed to Buy
+        
+          Place Order
         </button>
       </div>
       <div
@@ -173,7 +226,7 @@ function CartPage() {
             </div>
             <div class="modal-body">
               <div className="register-form">
-                <form onSubmit={handleSubmit}>
+                <form >
                   <input
                     type="text"
                     className="form-control"
@@ -228,11 +281,24 @@ function CartPage() {
                   />
 
                   <p style={{color:"red"}}>{formErrors.number}</p>
-               
-                  <button type="submit">Deliver to this address </button>
-              
+
+                  <Button type="submit" variant="text" onClick={handleSubmit}>Deliver to this address 
+                  <Button variant="text" type="submit" data-bs-dismiss="modal">
+                <StripeCheckout 
+                  // token={onToken}
+                  onClick={handleSubmit}
+                  disabled={formErrors.name}
+                  token={placeOrder}
+                  allowRememberMe
+                
+                  name="Please provide your details"
+                  currency="INR"
+                  // amount={totalAmount}
+                  stripeKey="pk_test_51KhBC0SAPA9SMMhz607kt3WuhuFUrgG5Vc0eluvmaOI4gdytTNaxmFYcshefxmoPf6qkHRCrsrHEExBFu8hcUdon00I7XUWZuI"
+                />
+              </Button>
+              </Button>
                   
-        
                 </form>
               </div>
             </div>
@@ -244,6 +310,7 @@ function CartPage() {
               >
                 Close
               </button>
+              
              
             </div>
           </div>

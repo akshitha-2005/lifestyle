@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import Loader from '../components/Loader';
 import { toast } from "react-toastify";
+import firebaseDB from "../firebaseConfig";
+import { addDoc, collection } from "firebase/firestore";
 
 function RegisterPage() {
   const [name,setName ] = useState("");
@@ -13,6 +15,15 @@ function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const auth = getAuth();
 
+const addUserData = async() =>{
+       const user = {name,email}
+            try{
+                await addDoc(collection(firebaseDB,"users"),user);
+            }catch(error){
+                console.log(error);
+            }
+        
+    }
   const register=async() => {
     try {
       setLoading(true)
@@ -20,6 +31,7 @@ function RegisterPage() {
       console.log(result)
       setLoading(false)
       toast.success('Registration successfull')
+      addUserData()
       setName('')
       setEmail('')
       setPassword('')
@@ -100,7 +112,7 @@ function RegisterPage() {
               REGISTER
             </Button>
             <hr />
-            <Link to='/login'>Click Here To Login</Link>
+            <Link to='/login' className="btn btn-primary">Click Here To Login</Link>
           </div>
         </div>
       </div>

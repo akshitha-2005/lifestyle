@@ -63,7 +63,7 @@ function ProductInfo() {
               
                 <div className="d-flex justify-content-end my-3">
                   
-                  <Button variant="outlined" onClick={() => {addToCart(product)}}>ADD TO CART</Button>
+                  <Button variant="outlined" onClick={() => addToCart(product)}>ADD TO CART</Button>
                 </div>
               </div>
             )}

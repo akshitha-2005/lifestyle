@@ -1,66 +1,80 @@
-import React, { useState, useEffect } from "react";
-import Layout from "../components/Layout";
-import firebaseDB from "../firebaseConfig";
-import { getDocs, collection } from "firebase/firestore";
+// import React, { useState, useEffect } from "react";
+// import Layout from "../components/Layout";
+// import firebaseDB from "../firebaseConfig";
+// import { getDocs, collection } from "firebase/firestore";
 
-function OrdersPage() {
-  const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    getData();
-  }, []);
-  async function getData() {
-    try {
-      setLoading(true);
-      const result = await getDocs(collection(firebaseDB, "orders"));
-      const ordersArray = [];
-      result.forEach((doc) => {
-        ordersArray.push(doc.data());
-        setLoading(false);
-      });
-      console.log(ordersArray);
-      setOrders(ordersArray);
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
-    }
-  }
-  return (
-     <Layout loading={loading}>
-       <div className="">
-       {orders.map((order) => {
-        return (
-          <table className="table mt-3 order">
-            <thead>
-              <tr>
-                <th>Image</th>
-                <th>Name</th>
-                <th>Price</th>
-              </tr>
-            </thead>
-            <tbody>
-              {order.cartItems.map((item) => {
-                return (
-                  <tr>
-                    <td>
-                      <img src={item.imageURL} height="80" width="80" />
-                    </td>
+// function OrdersPage() {
+//   const [orders, setOrders] = useState([]);
+//   const [loading, setLoading] = useState(false);
 
-                    <td>{item.name}</td>
-                    <td>{item.price}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
+//   useEffect(() => {
+//     getData();
+//   }, []);
+
+  
+//   async function getData() {
+//     try {
+//       setLoading(true);
+//       const result = await getDocs(collection(firebaseDB, "orders"));
+//       const ordersArray = [];
+//       result.forEach((doc) => {
+//         ordersArray.push(doc.data());
+//         setLoading(false);
+//       });
+//       console.log(ordersArray);
+//       setOrders(ordersArray);
+//     } catch (error) {
+//       console.log(error);
+//       setLoading(false);
+//     }
+//   }
+//   return (
+//      <Layout loading={loading}>
+//        <div className="">
+//          <div className="card-header">
+//        <h4>Orders</h4>
+//        </div>
+//        {orders.map((order) => {
+          
+//         return (
          
-          </table>
-        )
-      })}
-      </div>
-    </Layout>
-  );
-}
+//           <table className="table mt-3 order">
+            
+//             <thead>
+//               <tr>
+              
+//                 <th>Image</th>
+//                 <th>Name</th>
+//                 <th>Quantity</th>
+//                 <th>Price</th>
+               
+//               </tr>
+//             </thead>
+//             <tbody>
+//               {order.cartItems.map((item) => {
+//                 return (
+//                   <tr>
+//                     <td>
+//                       <img src={item.imageURL} height="80" width="80" />
+//                     </td>
+                   
+//                     <td>{item.name}</td>
+//                     <td>{item.quantity}</td>
+//                     <td>{item.price}</td>
+             
+//                   </tr>
+//                 );
+//               })}
+//             </tbody>
+         
+//           </table>
+//         )
+//       })}
+//       </div>
+//     </Layout>
+//   );
+// }
 
-export default OrdersPage;
+// export default OrdersPage;
 

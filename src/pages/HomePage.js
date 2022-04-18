@@ -71,6 +71,7 @@ function HomePage() {
       <div className="container">
         <div className="row">
           {products.map((product) => {
+            console.log(product);
             return (
               <div className="col-md-3">
                 <div className="m-2 p-1 product position-relative">
@@ -88,9 +89,10 @@ function HomePage() {
                   <div className="product-actions">
                     <h2>Rs.{product.price}</h2>
                     <div className="d-flex">
+                    {/* <Button variant="outlined" onClick={() => addToCart({...product,quantity:1})}>ADD TO CART</Button> */}
                     <Button variant="outlined" onClick={() => addToCart(product)}>ADD TO CART</Button>
                     &nbsp;&nbsp;&nbsp;
-                    
+                  
                       <Button variant="outlined"
                         onClick={() => {
                           navigate(`/productinfo/${product.id}`);

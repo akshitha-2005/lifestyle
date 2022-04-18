@@ -8,7 +8,7 @@ import RegisterPage from "./pages/RegisterPage";
 import ProductInfo from "./pages/ProductInfo";
 import CartPage from "./pages/CartPage";
 import OrdersPage from "./pages/OrdersPage";
-import PaymentPage from "./pages/PaymentPage";
+
 
 
 
@@ -34,11 +34,7 @@ function App() {
           <Route path="/orders" exact element={<OrdersPage />} />
 
           <Route path="/login" exact element={<LoginPage />} />
-          <Route path="/payments" exact element={<PaymentPage />} />
-        
           
-        
-
         </Routes>
       </BrowserRouter>
       </div>
