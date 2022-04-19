@@ -90,16 +90,16 @@ function HomePage() {
                     <h2>Rs.{product.price}</h2>
                     <div className="d-flex">
                     {/* <Button variant="outlined" onClick={() => addToCart({...product,quantity:1})}>ADD TO CART</Button> */}
-                    <Button variant="outlined" onClick={() => addToCart(product)}>ADD TO CART</Button>
+                    <button type="button" class="btn btn-outline-info" onClick={() => addToCart(product)}>ADD TO CART</button>
                     &nbsp;&nbsp;&nbsp;
                   
-                      <Button variant="outlined"
+                      <button type="button" class="btn btn-outline-info"
                         onClick={() => {
                           navigate(`/productinfo/${product.id}`);
                         }}
                       >
                         VIEW
-                      </Button>
+                      </button>
                     </div>
                   </div>
                 </div>

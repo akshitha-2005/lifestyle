@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Layout from "../components/Layout";
 import { FaTrash } from "react-icons/fa";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc } from "firebase/firestore";
 import { async } from "@firebase/util";
 import firebaseDB from "../firebaseConfig";
 import { toast } from "react-toastify";
 import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import StripeCheckout from "react-stripe-checkout";
 
 
@@ -51,7 +52,7 @@ function CartPage() {
   }, [formErrors]);
   const validate = (values) => {
     const errors = {};
-    const regex = "[a-zA-Z]";
+    const regex = "^[A-Z][a-z]+\s[A-Z][a-z]+$";
     
 
     if (!values.name) {
@@ -119,6 +120,12 @@ function CartPage() {
     dispatch({ type: "SUB_QUANTITY", payload: product });
   };
 
+  const clearCart = (product) => {
+    dispatch({ type: "CLEAR_CART", payload: product });
+  }
+
+  const params = useParams();
+
   const placeOrder = async () => {
     const  {
       name,
@@ -140,7 +147,9 @@ function CartPage() {
       setLoading(true);
       const result = await addDoc(collection(firebaseDB, "orders"), orderInfo);
       setLoading(false);
+      clearCart();
       toast.success("Order placed successfully");
+     
     } catch (error) {
       setLoading(false);
       toast.error("Order failed");

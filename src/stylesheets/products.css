@@ -39,7 +39,7 @@
     padding-left: 30px;
 }
 
-.total-amount {
+/* .total-amount {
     background-color: greenyellow;
     padding: 10px;
     border-top-left-radius: 50px;
@@ -49,9 +49,9 @@
 .total-amount:hover{
     background-color: black;
     color: white;
-}
+} */
 
 .order {
-    background-color: aliceblue;
-    margin: 20px;
+    background-color: whitesmoke;
+    margin: 10px;
 }
