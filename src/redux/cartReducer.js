@@ -7,8 +7,19 @@ const initialState = {
 export const cartReducer = (state = initialState, action) => {
   switch (action.type) {
     case "ADD_TO_CART": {
+      // return {
+      //   ...state,
+      //   cartItems: state.cartItems.map(cart =>
+      //     cart.id === action.payload.id
+      //     ? {...cart, quantity: cart.quantity + 1 }
+      //     : cart,
+      //     ),
+      // };
       return {
-        ...state,
+        // ...state,
+        // cartItems: state.cartItems.map(product => 
+        //   product.id === action.payload.id ? {...product, selected: true} : product,
+        //   ),
         cartItems: [...state.cartItems, action.payload],
       };
   }

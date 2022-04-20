@@ -29,9 +29,9 @@ function LoginPage() {
     try {
       setLoading(true);
       const result = await signInWithEmailAndPassword(auth, email, password);
-      
- 
+      // const res = await signInWithGoogle(auth,email,password);
       localStorage.setItem("currentUser", JSON.stringify(result));
+      // localStorage.setItem("currentUser", JSON.stringify(res));
       setLoading(false);
       
       toast.success("Login successfull");

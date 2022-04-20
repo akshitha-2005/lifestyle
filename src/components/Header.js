@@ -41,7 +41,7 @@ function Header() {
             <ul className="navbar-nav ms-auto">
               <li className="nav-item">
                 <Link className="nav-link active" aria-current="page" to="/home">
-                <FaUser /> {user.email.substring(0, user.email.length - 10)} 
+                {/* <FaUser /> {user.email.substring(0, user.email.length - 10)}  */}
                 </Link>
               </li>
               <li className="nav-item">
@@ -51,7 +51,7 @@ function Header() {
               </li>
               <li className="nav-item">
               <Link className="nav-link" to="/orders">
-                  Orders
+                  My orders
                 </Link>
               </li>
               <li className="nav-item">

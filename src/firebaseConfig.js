@@ -36,8 +36,10 @@ export const signInWithGooglePopup = () =>
 export const signInWithGoogleRedirect = () =>
   signInWithRedirect(auth, googleProvider);
 
-  export const signInAuthUserWithEmailAndPassword = async (email, password) => {
+  export const signInAuthUserWithEmailAndPassword = async (auth, email, password) => {
+    console.log(email);
     if (!email || !password) return;
+
   
     return await signInWithEmailAndPassword(auth, email, password);
   };

@@ -52,9 +52,8 @@ function CartPage() {
   }, [formErrors]);
   const validate = (values) => {
     const errors = {};
-    const regex = /^[A-Z][a-z]+\s[A-Z][a-z]+$/;
-    
-
+    const regex = /^[آ-یA-z]{2,}( [آ-یA-z]{2,})+([آ-یA-z]|[ ]?)$/;
+  
     if (!values.name) {
       errors.name = "Name is required!"; 
     } else if (!regex.test(values.name)) {
@@ -70,6 +69,8 @@ function CartPage() {
       errors.pincode = "Pincode is required!";
     } else if (values.pincode.length > 6) {
       errors.pincode = "Pincode cannot exceed more than 6 digits"
+    } else if (values.pincode.length < 6) {
+      errors.pincode = "Pincode must be 6 digits"
     }
     if (!values.number) {
       errors.number = "Phone number is required!";
@@ -182,7 +183,7 @@ function CartPage() {
                 <td>{item.price}</td>
                 <td>
                 <div className="input-group">
-                <button onClick={() => subtractQuantity(item)}>-</button>
+                <button onClick={() => subtractQuantity(item)} disabled={item.quantity < 2}>-</button>
                  &nbsp;&nbsp;
                <button>{item.quantity}</button>
                &nbsp;&nbsp;
@@ -208,6 +209,7 @@ function CartPage() {
           class="btn btn-success"
           data-bs-toggle="modal"
           data-bs-target="#exampleModal"
+          disabled={totalCartPrice < 1}
         >
         
           Place Order
@@ -296,7 +298,7 @@ function CartPage() {
                 <StripeCheckout 
                   // token={onToken}
                   onClick={handleSubmit}
-                  disabled={!formValues.name}
+                  disabled={!formValues.name || !formValues.address || !formValues.city || !formValues.pincode || !formValues.number}
                   token={placeOrder}
                   allowRememberMe
                 

@@ -20,12 +20,11 @@ function OrdersPage() {
   // async function getData() {
   //   try {
   //     setLoading(true);
-  //     const orderTemp = await getDoc(
-  //       doc(firebaseDB, "orders", params.ordersid)
-  //     );
-
-  //     setOrders(orderTemp.data());
-  //     console.log(orderTemp);
+  //     const orderTemp = await getDocs(collection(firebaseDB,"orders"));
+  //     const ordersArray = [];
+  //     orderTemp.forEach((doc) => {
+  //       ordersArray.push(doc.id.data());
+  //     })
   //     setLoading(false)
   //   } catch (error) {
   //     console.log(error);
@@ -38,9 +37,10 @@ function OrdersPage() {
     try {
       setLoading(true);
       const result = await getDocs(collection(firebaseDB, "orders"));
+      console.log(result);
       const ordersArray = [];
       result.forEach((doc) => {
-        console.log(doc);
+        console.log(doc.id);
         ordersArray.push(doc.data());
         setLoading(false);
       });
