@@ -52,14 +52,14 @@ function CartPage() {
   }, [formErrors]);
   const validate = (values) => {
     const errors = {};
-    const regex = "^[A-Z][a-z]+\s[A-Z][a-z]+$";
+    const regex = /^[A-Z][a-z]+\s[A-Z][a-z]+$/;
     
 
     if (!values.name) {
-      errors.name = "Name is required!"; }
-    // } else if (!regex.test(values.name)) {
-    //   errors.name = "This is not a valid format";
-    // }
+      errors.name = "Name is required!"; 
+    } else if (!regex.test(values.name)) {
+      errors.name = "This is not a valid format";
+    }
     if (!values.address) {
       errors.address = "Address is required!";
     }
@@ -296,7 +296,7 @@ function CartPage() {
                 <StripeCheckout 
                   // token={onToken}
                   onClick={handleSubmit}
-                  disabled={formErrors.name}
+                  disabled={!formValues.name}
                   token={placeOrder}
                   allowRememberMe
                 

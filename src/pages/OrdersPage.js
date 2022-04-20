@@ -17,21 +17,21 @@ function OrdersPage() {
 
   var totalCartPrice = 0;
 
-  async function getData() {
-    try {
-      setLoading(true);
-      const orderTemp = await getDoc(
-        doc(firebaseDB, "orders", params.ordersid)
-      );
+  // async function getData() {
+  //   try {
+  //     setLoading(true);
+  //     const orderTemp = await getDoc(
+  //       doc(firebaseDB, "orders", params.ordersid)
+  //     );
 
-      setOrders(orderTemp.data());
-      console.log(orderTemp);
-      setLoading(false)
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
-    }
-  }
+  //     setOrders(orderTemp.data());
+  //     console.log(orderTemp);
+  //     setLoading(false)
+  //   } catch (error) {
+  //     console.log(error);
+  //     setLoading(false);
+  //   }
+  // }
 
   
   async function getData() {
@@ -40,6 +40,7 @@ function OrdersPage() {
       const result = await getDocs(collection(firebaseDB, "orders"));
       const ordersArray = [];
       result.forEach((doc) => {
+        console.log(doc);
         ordersArray.push(doc.data());
         setLoading(false);
       });
