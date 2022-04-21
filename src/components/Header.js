@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FaBars, FaCartPlus, FaUser } from "react-icons/fa";
 import { useSelector } from "react-redux";
+import { Avatar } from "@mui/material";
+import { deepOrange, deepPurple } from "@mui/material/colors";
 
 
 function Header() {
@@ -40,9 +42,9 @@ function Header() {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav ms-auto">
               <li className="nav-item">
-                <Link className="nav-link active" aria-current="page" to="/home">
-                <FaUser /> {user.email.substring(0, user.email.length - 10)} 
-                </Link>
+                {/* <Link className="nav-link active" aria-current="page" to="/home">
+                </Link> */}
+                <Avatar sx={{ bgcolor: deepPurple[500] }}>{user.email.charAt(0).toUpperCase()}</Avatar>
               </li>
               <li className="nav-item">
               {/* <Link className="nav-link" to="/register">

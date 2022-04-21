@@ -52,7 +52,7 @@ function CartPage() {
   }, [formErrors]);
   const validate = (values) => {
     const errors = {};
-    const regex = /^[آ-یA-z]{2,}( [آ-یA-z]{2,})+([آ-یA-z]|[ ]?)$/;
+    const regex = /^[آ-یA-z]{2,}( [آ-یA-z]{1,})+([آ-یA-z]|[ ]?)$/;
   
     if (!values.name) {
       errors.name = "Name is required!"; 

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../components/Layout";
 import firebaseDB from "../firebaseConfig";
-import { getDocs, collection, getDoc, doc } from "firebase/firestore";
+import { getDocs, collection, getDoc, doc, query, where } from "firebase/firestore";
 import { useParams } from "react-router-dom";
+import { async } from "@firebase/util";
 
 
 
@@ -32,30 +33,53 @@ function OrdersPage() {
   //   }
   // }
 
-  
-  async function getData() {
-    try {
-      setLoading(true);
-      const result = await getDocs(collection(firebaseDB, "orders"));
-      console.log(result);
+ async function getData(){
+   try{
+     setLoading(true);
+    const querySnapshot = await getDocs(collection(firebaseDB,"orders"));
+    querySnapshot.forEach((doc) => {
+      console.log(doc.id, "=>", doc.data());
       const ordersArray = [];
-      result.forEach((doc) => {
-        console.log(doc.id);
-        ordersArray.push(doc.data());
+      querySnapshot.forEach((doc) => {
+        const obj = {
+          id: doc.id,
+          ...doc.data(),
+        };
+        ordersArray.push(obj);
         setLoading(false);
-      });
+      })
       console.log(ordersArray);
       setOrders(ordersArray);
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
-    }
-  }
+    });
+   } catch (error) {
+        console.log(error);
+        setLoading(false);
+   }
+ }
+ 
+  // async function getData() {
+  //   try {
+  //     setLoading(true);
+  //     const result = await getDocs(collection(firebaseDB, "orders"));
+  //     console.log(result);
+  //     const ordersArray = [];
+  //     result.forEach((doc) => {
+  //       console.log(doc.id);
+  //       ordersArray.push(doc.data());
+  //       setLoading(false);
+  //     });
+  //     console.log(ordersArray);
+  //     setOrders(ordersArray);
+  //   } catch (error) {
+  //     console.log(error);
+  //     setLoading(false);
+  //   }
+  // }
   return (
      <Layout loading={loading}>
        <div className="">
          <div className="card-header">
-       <h4>Order Details</h4>
+            <h4>Order Details</h4>
        </div>
        {orders.map((order) => {
           
