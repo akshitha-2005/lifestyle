@@ -56,6 +56,7 @@ function CartPage() {
   const validate = (values) => {
     const errors = {};
     const regex = /^[آ-یA-z]{2,}( [آ-یA-z]{1,})+([آ-یA-z]|[ ]?)$/;
+    const regexCity = /^[a-zA-Z\- ]+$/;
 
     if (!values.name?.trim()) {
       errors.name = "Full Name is required!";
@@ -67,6 +68,8 @@ function CartPage() {
     }
     if (!values.city?.trim()) {
       errors.city = "City is required!";
+    } else if (!regexCity.test(values.city)){
+      errors.city = "Invalid city name!";
     }
     if (!values.pincode?.trim()) {
       errors.pincode = "Pincode is required!";
@@ -143,7 +146,7 @@ function CartPage() {
       setLoading(false);
       toast.success("Order placed successfully");
       clearCart();
-      window.location.href = "/home";
+      // window.location.href = "/home";
     } catch (error) {
       setLoading(false);
       toast.error("Order failed");
@@ -308,7 +311,7 @@ function CartPage() {
                 />
 
                 <p style={{ color: "red" }}>{formErrors.number}</p>
-
+                
                 {showPayWithCard ? (
                   <StripeCheckout
                     onClick={handleSubmit}
@@ -316,14 +319,17 @@ function CartPage() {
                     allowRememberMe
                     name='Please provide your details'
                     currency='INR'
-                    // amount={totalAmount}
+                    amount={totalCartPrice * 100}
                     stripeKey='pk_test_51KhBC0SAPA9SMMhz607kt3WuhuFUrgG5Vc0eluvmaOI4gdytTNaxmFYcshefxmoPf6qkHRCrsrHEExBFu8hcUdon00I7XUWZuI'
                   />
                 ) : (
+                 
                   <Button type='submit' variant='text' onClick={handleSubmit}>
                     Deliver to this address
                   </Button>
                 )}
+                <Button variant="text"  data-bs-dismiss='modal'>
+                  </Button>
               </div>
             </div>
             <div class='modal-footer'>

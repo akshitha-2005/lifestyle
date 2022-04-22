@@ -10,6 +10,8 @@ import { async } from "@firebase/util";
 function OrdersPage() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { user } = JSON.parse(localStorage.getItem("currentUser"));
+
   const params = useParams();
 
   useEffect(() => {
@@ -48,7 +50,7 @@ function OrdersPage() {
          <div className="card-header">
             <h4>Order Details</h4>
        </div>
-       {orders.map((order) => {
+       {orders.filter(order => order.userid === user.uid).map((order) => {
           
         return (
          
@@ -73,7 +75,6 @@ function OrdersPage() {
                   totalCartPrice = item.price * item.quantity;
                 return (
                   <tr>
-                    {/* <td>{item.id}</td> */}
                     <td>
                       <img src={item.imageURL} height="50" width="50" />
                     </td>
@@ -85,7 +86,6 @@ function OrdersPage() {
                   </tr>
                 );
               })}
-              {order.userid}
             </tbody>
          
           </table>
