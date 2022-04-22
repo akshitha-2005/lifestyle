@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@mui/material";
 
-
 function HomePage() {
   // async function adddata() {
   //     try{
@@ -61,39 +60,53 @@ function HomePage() {
   }, [cartItems]);
 
   const addToCart = (product) => {
-    dispatch({ type: "ADD_TO_CART", payload: product });
-  };
-  
+    let isProductAlredayAddedToCart = false;
+    isProductAlredayAddedToCart = cartItems.filter(
+      (cartItem) => cartItem.id === product.id
+    ).length;
 
+    if (isProductAlredayAddedToCart) {
+      dispatch({ type: "ADD_QUANTITY", payload: product });
+    } else {
+      dispatch({ type: "ADD_TO_CART", payload: product });
+    }
+  };
 
   return (
     <Layout loading={loading}>
-      <div className="container">
-        <div className="row">
+      <div className='container'>
+        <div className='row'>
           {products.map((product) => {
             console.log(product);
             return (
-              <div className="col-md-3">
-                <div className="m-2 p-1 product position-relative">
-                  <div className="product-content">
+              <div className='col-md-3'>
+                <div className='m-2 p-1 product position-relative'>
+                  <div className='product-content'>
                     <p>{product.name}</p>
-                    </div>
-                    <div className="text-center">
-                      <img
-                        src={product.imageURL}
-                        alt=""
-                        className="product-img"
-                      />
-                    </div>
-                  
-                  <div className="product-actions">
+                  </div>
+                  <div className='text-center'>
+                    <img
+                      src={product.imageURL}
+                      alt=''
+                      className='product-img'
+                    />
+                  </div>
+
+                  <div className='product-actions'>
                     <h2>Rs.{product.price}</h2>
-                    <div className="d-flex">
-                    {/* <Button variant="outlined" onClick={() => addToCart({...product,quantity:1})}>ADD TO CART</Button> */}
-                    <button type="button" class="btn btn-outline-info" onClick={() => addToCart(product)}>ADD TO CART</button>
-                    &nbsp;&nbsp;&nbsp;
-                  
-                      <button type="button" class="btn btn-outline-info"
+                    <div className='d-flex'>
+                      {/* <Button variant="outlined" onClick={() => addToCart({...product,quantity:1})}>ADD TO CART</Button> */}
+                      <button
+                        type='button'
+                        class='btn btn-outline-info'
+                        onClick={() => addToCart(product)}
+                      >
+                        ADD TO CART
+                      </button>
+                      &nbsp;&nbsp;&nbsp;
+                      <button
+                        type='button'
+                        class='btn btn-outline-info'
                         onClick={() => {
                           navigate(`/productinfo/${product.id}`);
                         }}
