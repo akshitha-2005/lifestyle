@@ -88,8 +88,11 @@ function OrdersPage() {
           <table className="table mt-3 order">
             
             <thead>
-              <tr>
-                <th>Order #</th>
+              
+                <tr>
+                <th>Order #{order.id}</th>
+                </tr>
+               <tr>
                 <th>Image</th>
                 <th>Name</th>
                 <th>Quantity</th>
@@ -103,7 +106,7 @@ function OrdersPage() {
                   totalCartPrice = item.price * item.quantity;
                 return (
                   <tr>
-                    <td>{item.id}</td>
+                    {/* <td>{item.id}</td> */}
                     <td>
                       <img src={item.imageURL} height="50" width="50" />
                     </td>

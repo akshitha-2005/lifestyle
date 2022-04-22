@@ -36,6 +36,7 @@ function CartPage() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
+    
   };
 
   const handleSubmit = (e) => {
@@ -298,7 +299,7 @@ function CartPage() {
                 <StripeCheckout 
                   // token={onToken}
                   onClick={handleSubmit}
-                  disabled={!formValues.name || !formValues.address || !formValues.city || !formValues.pincode || !formValues.number}
+                  disabled={Object.keys(formErrors).length > 0 || !formValues.name || !formValues.address || !formValues.city || !formValues.pincode || !formValues.number}
                   token={placeOrder}
                   allowRememberMe
                 

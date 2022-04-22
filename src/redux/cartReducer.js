@@ -7,21 +7,22 @@ const initialState = {
 export const cartReducer = (state = initialState, action) => {
   switch (action.type) {
     case "ADD_TO_CART": {
-      // return {
-      //   ...state,
-      //   cartItems: state.cartItems.map(cart =>
-      //     cart.id === action.payload.id
-      //     ? {...cart, quantity: cart.quantity + 1 }
-      //     : cart,
-      //     ),
-      // };
+      console.log(action);
       return {
-        // ...state,
-        // cartItems: state.cartItems.map(product => 
-        //   product.id === action.payload.id ? {...product, selected: true} : product,
-        //   ),
-        cartItems: [...state.cartItems, action.payload],
+        ...state,
+        cartItems: state.cartItems.length > 0 ? state.cartItems.map(cart =>
+          cart.id === action.payload.id
+          ? {...cart, quantity: cart.quantity + 1 }
+          : action.payload,
+          ): [...state.cartItems, action.payload]
       };
+      // return {
+      //   // ...state,
+      //   // cartItems: state.cartItems.map(product => 
+      //   //   product.id === action.payload.id ? {...product, selected: true} : product,
+      //   //   ),
+      //   cartItems: [...state.cartItems, action.payload],
+      // };
   }
     case "DELETE_FROM_CART": {
       return {
