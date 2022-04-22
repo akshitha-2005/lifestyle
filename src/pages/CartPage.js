@@ -11,10 +11,8 @@ import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import StripeCheckout from "react-stripe-checkout";
 
-
 function CartPage() {
   const { cartItems } = useSelector((state) => state.cartReducer);
- 
 
   // const [name, setName] = useState("");
   // const [address, setAddress] = useState("");
@@ -32,11 +30,13 @@ function CartPage() {
   const [formValues, setFormValues] = useState(initialValues);
   const [formErrors, setFormErrors] = useState({});
   const [isSubmit, setIsSubmit] = useState(false);
+  // This is sort of a hack to display Pay With Card button for valid inputs only
+  const [showPayWithCard, setShowPayWithCard] = useState(false);
 
   const handleChange = (e) => {
+    setShowPayWithCard(false);
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
-    
   };
 
   const handleSubmit = (e) => {
@@ -48,37 +48,34 @@ function CartPage() {
   useEffect(() => {
     console.log(formErrors);
     if (Object.keys(formErrors).length === 0 && isSubmit) {
-      console.log(formValues);
+      setShowPayWithCard(true);
     }
   }, [formErrors]);
+
   const validate = (values) => {
     const errors = {};
     const regex = /^[آ-یA-z]{2,}( [آ-یA-z]{1,})+([آ-یA-z]|[ ]?)$/;
-  
-    if (!values.name) {
-      errors.name = "Name is required!"; 
+
+    if (!values.name?.trim()) {
+      errors.name = "Full Name is required!";
     } else if (!regex.test(values.name)) {
-      errors.name = "This is not a valid format";
+      errors.name = "Invalid full name!";
     }
-    if (!values.address) {
+    if (!values.address?.trim()) {
       errors.address = "Address is required!";
     }
-    if (!values.city) {
+    if (!values.city?.trim()) {
       errors.city = "City is required!";
     }
-    if (!values.pincode) {
+    if (!values.pincode?.trim()) {
       errors.pincode = "Pincode is required!";
-    } else if (values.pincode.length > 6) {
-      errors.pincode = "Pincode cannot exceed more than 6 digits"
-    } else if (values.pincode.length < 6) {
-      errors.pincode = "Pincode must be 6 digits"
+    } else if (values.pincode.length !== 6) {
+      errors.pincode = "Pincode must be of 6 digits";
     }
-    if (!values.number) {
+    if (!values.number?.trim()) {
       errors.number = "Phone number is required!";
-    } else if (values.number.length < 10) {
-      errors.number = "Phone number must be 10 digits";
-    } else if (values.number.length > 10) {
-      errors.number = "Phone number cannot exceed more than 10 digits";
+    } else if (values.number.length !== 10) {
+      errors.number = "Pincode must be of 10 digits";
     }
 
     return errors;
@@ -124,18 +121,12 @@ function CartPage() {
 
   const clearCart = (product) => {
     dispatch({ type: "CLEAR_CART", payload: product });
-  }
+  };
 
   const params = useParams();
 
   const placeOrder = async () => {
-    const  {
-      name,
-      address,
-      city,
-      pincode,
-      number
-    } = formValues
+    const { name, address, city, pincode, number } = formValues;
     console.log(formValues);
 
     const orderInfo = {
@@ -151,17 +142,15 @@ function CartPage() {
       setLoading(false);
       clearCart();
       toast.success("Order placed successfully");
-     
     } catch (error) {
       setLoading(false);
       toast.error("Order failed");
     }
   };
-  
 
   return (
     <Layout loading={loading}>
-      <table className="table mt-3">
+      <table className='table mt-3'>
         <thead>
           <tr>
             <th>Image</th>
@@ -177,19 +166,24 @@ function CartPage() {
             return (
               <tr>
                 <td>
-                  <img src={item.imageURL} height="80" width="80" />
+                  <img src={item.imageURL} height='80' width='80' />
                 </td>
 
                 <td>{item.name}</td>
                 <td>{item.price}</td>
                 <td>
-                <div className="input-group">
-                <button onClick={() => subtractQuantity(item)} disabled={item.quantity < 2}>-</button>
-                 &nbsp;&nbsp;
-               <button>{item.quantity}</button>
-               &nbsp;&nbsp;
-                <button onClick={() => addQuantity(item)}>+</button>
-                </div>
+                  <div className='input-group'>
+                    <button
+                      onClick={() => subtractQuantity(item)}
+                      disabled={item.quantity < 2}
+                    >
+                      -
+                    </button>
+                    &nbsp;&nbsp;
+                    <button>{item.quantity}</button>
+                    &nbsp;&nbsp;
+                    <button onClick={() => addQuantity(item)}>+</button>
+                  </div>
                 </td>
 
                 <td>
@@ -200,136 +194,133 @@ function CartPage() {
           })}
         </tbody>
       </table>
-      <div className="d-flex justify-content-end">
-        <button type="button" class="btn btn-warning">Total Amount = Rs. {totalCartPrice}</button>
+      <div className='d-flex justify-content-end'>
+        <button type='button' class='btn btn-warning'>
+          Total Amount = Rs. {totalCartPrice}
+        </button>
       </div>
 
-      <div className="d-flex justify-content-end mt-3">
+      <div className='d-flex justify-content-end mt-3'>
         <button
-          type="button"
-          class="btn btn-success"
-          data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
+          type='button'
+          class='btn btn-success'
+          data-bs-toggle='modal'
+          data-bs-target='#exampleModal'
           disabled={totalCartPrice < 1}
         >
-        
           Place Order
         </button>
       </div>
       <div
-        class="modal fade"
-        id="exampleModal"
-        tabindex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
+        class='modal fade'
+        id='exampleModal'
+        tabindex='-1'
+        aria-labelledby='exampleModalLabel'
+        aria-hidden='true'
       >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">
+        <div class='modal-dialog'>
+          <div class='modal-content'>
+            <div class='modal-header'>
+              <h5 class='modal-title' id='exampleModalLabel'>
                 Shipping Address
               </h5>
               <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
+                type='button'
+                class='btn-close'
+                data-bs-dismiss='modal'
+                aria-label='Close'
               ></button>
             </div>
-            <div class="modal-body">
-              <div className="register-form">
-                <form >
-                  <input
-                    type="text"
-                    className="form-control"
-                    name="name"
-                    placeholder="Name"
-                    value={formValues.name}
-                    onChange={handleChange}
-                  />
-                  <p style={{color:"red"}}>{formErrors.name}</p>
-
-                  <textarea
-                    type="text"
-                    className="form-control"
-                    name="address"
-                    placeholder="Address"
-                    value={formValues.address}
-                    onChange={handleChange}
-                  />
-
-                  <p style={{color:"red"}}>{formErrors.address}</p>
-
-                  <input
-                    type="text"
-                    className="form-control"
-                    rows={3}
-                    name="city"
-                    placeholder="City"
-                    value={formValues.city}
-                    onChange={handleChange}
-                  />
-
-                  <p style={{color:"red"}}>{formErrors.city}</p>
-
-                  <input
-                    type="number"
-                    className="form-control"
-                    name="pincode"
-                    placeholder="Pincode"
-                    value={formValues.pincode}
-                    onChange={handleChange}
-                  />
-
-                  <p style={{color:"red"}}>{formErrors.pincode}</p>
-
-                  <input
-                    type="number"
-                    className="form-control"
-                    name="number"
-                    placeholder="Number"
-                    value={formValues.number}
-                    onChange={handleChange}
-                  />
-
-                  <p style={{color:"red"}}>{formErrors.number}</p>
-
-                  <Button type="submit" variant="text" onClick={handleSubmit}>Deliver to this address 
-                  <Button variant="text" type="submit" data-bs-dismiss="modal">
-                <StripeCheckout 
-                  // token={onToken}
-                  onClick={handleSubmit}
-                  disabled={Object.keys(formErrors).length > 0 || !formValues.name || !formValues.address || !formValues.city || !formValues.pincode || !formValues.number}
-                  token={placeOrder}
-                  allowRememberMe
-                
-                  name="Please provide your details"
-                  currency="INR"
-                  // amount={totalAmount}
-                  stripeKey="pk_test_51KhBC0SAPA9SMMhz607kt3WuhuFUrgG5Vc0eluvmaOI4gdytTNaxmFYcshefxmoPf6qkHRCrsrHEExBFu8hcUdon00I7XUWZuI"
+            <div class='modal-body'>
+              <div className='register-form'>
+                <input
+                  type='text'
+                  className='form-control'
+                  name='name'
+                  placeholder='Name'
+                  value={formValues.name}
+                  onChange={handleChange}
                 />
-              </Button>
-              </Button>
-                  
-                </form>
+                <p style={{ color: "red" }}>{formErrors.name}</p>
+
+                <textarea
+                  type='text'
+                  className='form-control'
+                  name='address'
+                  placeholder='Address'
+                  value={formValues.address}
+                  onChange={handleChange}
+                />
+
+                <p style={{ color: "red" }}>{formErrors.address}</p>
+
+                <input
+                  type='text'
+                  className='form-control'
+                  rows={3}
+                  name='city'
+                  placeholder='City'
+                  value={formValues.city}
+                  onChange={handleChange}
+                />
+
+                <p style={{ color: "red" }}>{formErrors.city}</p>
+
+                <input
+                  type='number'
+                  className='form-control'
+                  name='pincode'
+                  placeholder='Pincode'
+                  value={formValues.pincode}
+                  onChange={handleChange}
+                />
+
+                <p style={{ color: "red" }}>{formErrors.pincode}</p>
+
+                <input
+                  type='number'
+                  className='form-control'
+                  name='number'
+                  placeholder='Number'
+                  value={formValues.number}
+                  onChange={handleChange}
+                />
+
+                <p style={{ color: "red" }}>{formErrors.number}</p>
+
+                {showPayWithCard ? ( // Object.keys(formErrors).length > 0 ||
+                  // !formValues.name ||
+                  // !formValues.address ||
+                  // !formValues.city ||
+                  // !formValues.pincode ||
+                  // !formValues.number
+                  <StripeCheckout
+                    token={placeOrder}
+                    allowRememberMe
+                    name='Please provide your details'
+                    currency='INR'
+                    // amount={totalAmount}
+                    stripeKey='pk_test_51KhBC0SAPA9SMMhz607kt3WuhuFUrgG5Vc0eluvmaOI4gdytTNaxmFYcshefxmoPf6qkHRCrsrHEExBFu8hcUdon00I7XUWZuI'
+                  />
+                ) : (
+                  <Button type='submit' variant='text' onClick={handleSubmit}>
+                    Deliver to this address
+                  </Button>
+                )}
               </div>
             </div>
-            <div class="modal-footer">
+            <div class='modal-footer'>
               <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
+                type='button'
+                class='btn btn-secondary'
+                data-bs-dismiss='modal'
               >
                 Close
               </button>
-              
-             
             </div>
           </div>
         </div>
       </div>
-
-  
     </Layout>
   );
 }
