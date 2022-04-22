@@ -5,6 +5,8 @@ import { useSelector } from "react-redux";
 import { Avatar } from "@mui/material";
 import { deepOrange, deepPurple } from "@mui/material/colors";
 
+
+
 function Header() {
   const { cartItems } = useSelector((state) => state.cartReducer);
   const { user } = JSON.parse(localStorage.getItem("currentUser"));
@@ -14,7 +16,7 @@ function Header() {
     // window.location.reload();
     window.location.href = "/login";
   };
-
+  
   return (
     <div className='header'>
       <nav className='navbar navbar-expand-lg navbar-light bg-light'>

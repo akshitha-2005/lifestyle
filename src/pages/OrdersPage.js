@@ -18,21 +18,6 @@ function OrdersPage() {
 
   var totalCartPrice = 0;
 
-  // async function getData() {
-  //   try {
-  //     setLoading(true);
-  //     const orderTemp = await getDocs(collection(firebaseDB,"orders"));
-  //     const ordersArray = [];
-  //     orderTemp.forEach((doc) => {
-  //       ordersArray.push(doc.id.data());
-  //     })
-  //     setLoading(false)
-  //   } catch (error) {
-  //     console.log(error);
-  //     setLoading(false);
-  //   }
-  // }
-
  async function getData(){
    try{
      setLoading(true);
@@ -57,24 +42,6 @@ function OrdersPage() {
    }
  }
  
-  // async function getData() {
-  //   try {
-  //     setLoading(true);
-  //     const result = await getDocs(collection(firebaseDB, "orders"));
-  //     console.log(result);
-  //     const ordersArray = [];
-  //     result.forEach((doc) => {
-  //       console.log(doc.id);
-  //       ordersArray.push(doc.data());
-  //       setLoading(false);
-  //     });
-  //     console.log(ordersArray);
-  //     setOrders(ordersArray);
-  //   } catch (error) {
-  //     console.log(error);
-  //     setLoading(false);
-  //   }
-  // }
   return (
      <Layout loading={loading}>
        <div className="">
@@ -118,6 +85,7 @@ function OrdersPage() {
                   </tr>
                 );
               })}
+              {order.userid}
             </tbody>
          
           </table>

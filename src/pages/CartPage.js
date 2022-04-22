@@ -76,7 +76,7 @@ function CartPage() {
     if (!values.number?.trim()) {
       errors.number = "Phone number is required!";
     } else if (values.number.length !== 10) {
-      errors.number = "Pincode must be of 10 digits";
+      errors.number = "Phone nummber must be of 10 digits";
     }
 
     return errors;
