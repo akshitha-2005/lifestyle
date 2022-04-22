@@ -10,10 +10,11 @@ import { Button } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import StripeCheckout from "react-stripe-checkout";
+import { useNavigate } from "react-router-dom";
 
 function CartPage() {
   const { cartItems } = useSelector((state) => state.cartReducer);
-
+  const navigate = useNavigate();
   // const [name, setName] = useState("");
   // const [address, setAddress] = useState("");
   // const [city, setCity] = useState("");
@@ -140,8 +141,9 @@ function CartPage() {
       setLoading(true);
       const result = await addDoc(collection(firebaseDB, "orders"), orderInfo);
       setLoading(false);
-      clearCart();
       toast.success("Order placed successfully");
+      clearCart();
+      window.location.href = "/home";
     } catch (error) {
       setLoading(false);
       toast.error("Order failed");
@@ -194,23 +196,42 @@ function CartPage() {
           })}
         </tbody>
       </table>
-      <div className='d-flex justify-content-end'>
-        <button type='button' class='btn btn-warning'>
-          Total Amount = Rs. {totalCartPrice}
-        </button>
-      </div>
+      {totalCartPrice > 0 ? (
+        <>
+          <div className='d-flex justify-content-end'>
+            <button type='button' class='btn btn-warning'>
+              Total Amount = Rs. {totalCartPrice}
+            </button>
+          </div>
 
-      <div className='d-flex justify-content-end mt-3'>
-        <button
-          type='button'
-          class='btn btn-success'
-          data-bs-toggle='modal'
-          data-bs-target='#exampleModal'
-          disabled={totalCartPrice < 1}
-        >
-          Place Order
-        </button>
-      </div>
+          <div className='d-flex justify-content-end mt-3'>
+            <button
+              type='button'
+              class='btn btn-success'
+              data-bs-toggle='modal'
+              data-bs-target='#exampleModal'
+              disabled={totalCartPrice < 1}
+            >
+              Place Order
+            </button>
+          </div>
+        </>
+      ) : (
+        <>
+          <h3 className='d-flex justify-content-center mt-3'>
+            No Items in cart
+          </h3>
+          <div className='d-flex justify-content-center mt-3'>
+            <button
+              type='button'
+              class='btn btn-success'
+              onClick={() => navigate("/home")}
+            >
+              Start Adding
+            </button>
+          </div>
+        </>
+      )}
       <div
         class='modal fade'
         id='exampleModal'
@@ -288,13 +309,9 @@ function CartPage() {
 
                 <p style={{ color: "red" }}>{formErrors.number}</p>
 
-                {showPayWithCard ? ( // Object.keys(formErrors).length > 0 ||
-                  // !formValues.name ||
-                  // !formValues.address ||
-                  // !formValues.city ||
-                  // !formValues.pincode ||
-                  // !formValues.number
+                {showPayWithCard ? (
                   <StripeCheckout
+                    onClick={handleSubmit}
                     token={placeOrder}
                     allowRememberMe
                     name='Please provide your details'

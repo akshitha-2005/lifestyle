@@ -5,66 +5,64 @@ import { useSelector } from "react-redux";
 import { Avatar } from "@mui/material";
 import { deepOrange, deepPurple } from "@mui/material/colors";
 
-
 function Header() {
   const { cartItems } = useSelector((state) => state.cartReducer);
   const { user } = JSON.parse(localStorage.getItem("currentUser"));
-
-
 
   const logout = () => {
     localStorage.removeItem("currentUser");
     // window.location.reload();
     window.location.href = "/login";
-
   };
 
   return (
-    <div className="header">
-      <nav className="navbar navbar-expand-lg navbar-light bg-light">
-        <div className="container-fluid">
-          <Link className="navbar-brand" to="/home">
+    <div className='header'>
+      <nav className='navbar navbar-expand-lg navbar-light bg-light'>
+        <div className='container-fluid'>
+          <Link className='navbar-brand' to='/home'>
             LIFESTYLE
           </Link>
           <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
+            className='navbar-toggler'
+            type='button'
+            data-bs-toggle='collapse'
+            data-bs-target='#navbarNav'
+            aria-controls='navbarNav'
+            aria-expanded='false'
+            aria-label='Toggle navigation'
           >
-            <span className="navbar-toggler-icon">
-              <FaBars size={25} color="white" />
+            <span className='navbar-toggler-icon'>
+              <FaBars size={25} color='white' />
             </span>
           </button>
-          <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav ms-auto">
-              <li className="nav-item">
-                {/* <Link className="nav-link active" aria-current="page" to="/home">
-                </Link> */}
-                <Avatar sx={{ bgcolor: deepPurple[500] }}>{user.email.charAt(0).toUpperCase()}</Avatar>
-              </li>
-              <li className="nav-item">
-              {/* <Link className="nav-link" to="/register">
+          <div className='collapse navbar-collapse' id='navbarNav'>
+            <ul className='navbar-nav ms-auto'>
+              <li className='nav-item'>
+                {/* <Link className="nav-link" to="/register">
                   Sign up
                 </Link> */}
               </li>
-              <li className="nav-item">
-              <Link className="nav-link" to="/orders">
+              <li className='nav-item'>
+                <Link className='nav-link' to='/orders'>
                   My orders
                 </Link>
               </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/cart">
+              <li className='nav-item'>
+                <Link className='nav-link' to='/cart'>
                   <FaCartPlus /> {cartItems.length}
                 </Link>
               </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/" onClick={logout}>
+              <li className='nav-item'>
+                <Link className='nav-link' to='/' onClick={logout}>
                   Logout
                 </Link>
+              </li>
+              <li className='nav-item'>
+                {/* <Link className="nav-link active" aria-current="page" to="/home">
+                </Link> */}
+                <Avatar sx={{ bgcolor: deepPurple[500] }}>
+                  {user.email.charAt(0).toUpperCase()}
+                </Avatar>
               </li>
             </ul>
           </div>
