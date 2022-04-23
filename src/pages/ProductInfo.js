@@ -52,12 +52,11 @@ function ProductInfo() {
     <Layout loading={loading}>
       <div className='container'>
         <div className='row justify-content-center'>
-          <div className='col-md-10'>
-            <h2>Description</h2>
+          <div className='col-md-11'>
             {product && (
               <div className='box'>
                 <p className='center'>
-                  <b>{product.name}</b>
+                  <h2>{product.name}</h2>
                 </p>
                 <div className='container'>
                   <img src={product.imageURL} className='product-info-img' />
@@ -69,7 +68,8 @@ function ProductInfo() {
                     ))}
                   </ul>
                 </div>
-                <h3 className='center'>Rs.{product.price}</h3>
+                &nbsp;&nbsp;&nbsp;
+                <h3 className='center'>₹ {product.price}</h3>
 
                 <div className='d-flex justify-content-end my-3'>
                   <button

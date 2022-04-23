@@ -79,7 +79,7 @@ function CartPage() {
     if (!values.number?.trim()) {
       errors.number = "Phone number is required!";
     } else if (values.number.length !== 10) {
-      errors.number = "Phone nummber must be of 10 digits";
+      errors.number = "Phone number must be of 10 digits";
     }
 
     return errors;
@@ -175,7 +175,7 @@ function CartPage() {
                 </td>
 
                 <td>{item.name}</td>
-                <td>{item.price}</td>
+                <td>₹ {item.price}</td>
                 <td>
                   <div className='input-group'>
                     <button
@@ -201,20 +201,19 @@ function CartPage() {
       </table>
       {totalCartPrice > 0 ? (
         <>
-          <div className='d-flex justify-content-end'>
-            <button type='button' class='btn btn-warning'>
-              Total Amount = Rs. {totalCartPrice}
-            </button>
+          <div className='d-flex justify-content-end p-4'>
+              <div class="card-title total-amount">
+              <h5><strong>Total Price = ₹  {totalCartPrice}</strong></h5> 
+              </div>
           </div>
-
-          <div className='d-flex justify-content-end mt-3'>
+          <div className='d-flex justify-content-end p-4'>
             <button
               type='button'
               class='btn btn-success'
               data-bs-toggle='modal'
               data-bs-target='#exampleModal'
               disabled={totalCartPrice < 1}
-            >
+              >
               Place Order
             </button>
           </div>
@@ -311,8 +310,9 @@ function CartPage() {
                 />
 
                 <p style={{ color: "red" }}>{formErrors.number}</p>
-                
+              
                 {showPayWithCard ? (
+                    <Button variant="text"  data-bs-dismiss='modal'>
                   <StripeCheckout
                     onClick={handleSubmit}
                     token={placeOrder}
@@ -322,14 +322,15 @@ function CartPage() {
                     amount={totalCartPrice * 100}
                     stripeKey='pk_test_51KhBC0SAPA9SMMhz607kt3WuhuFUrgG5Vc0eluvmaOI4gdytTNaxmFYcshefxmoPf6qkHRCrsrHEExBFu8hcUdon00I7XUWZuI'
                   />
+                  </Button>
                 ) : (
                  
                   <Button type='submit' variant='text' onClick={handleSubmit}>
                     Deliver to this address
                   </Button>
                 )}
-                <Button variant="text"  data-bs-dismiss='modal'>
-                  </Button>
+              
+                 
               </div>
             </div>
             <div class='modal-footer'>

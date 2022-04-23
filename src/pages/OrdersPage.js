@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../components/Layout";
 import firebaseDB from "../firebaseConfig";
-import { getDocs, collection, getDoc, doc, query, where } from "firebase/firestore";
-import { useParams } from "react-router-dom";
-import { async } from "@firebase/util";
-
+import { getDocs, collection } from "firebase/firestore";
 
 
 function OrdersPage() {
@@ -12,7 +9,6 @@ function OrdersPage() {
   const [loading, setLoading] = useState(false);
   const { user } = JSON.parse(localStorage.getItem("currentUser"));
 
-  const params = useParams();
 
   useEffect(() => {
     getData();
@@ -46,15 +42,15 @@ function OrdersPage() {
  
   return (
      <Layout loading={loading}>
-       <div className="">
-         <div className="card-header">
-            <h4>Order Details</h4>
+       {/* <div className=""> */}
+         <div className="card-title order-details">
+            <h4><strong>Order Details</strong></h4>
        </div>
        {orders.filter(order => order.userid === user.uid).map((order) => {
           
         return (
          
-          <table className="table mt-3 order">
+          <table class="table mt-3 order">
             
             <thead>
               
@@ -80,18 +76,20 @@ function OrdersPage() {
                     </td>
                     <td>{item.name}</td>
                     <td>{item.quantity}</td>
-                    <td>{item.price}</td>
-                    <td>{totalCartPrice}</td>
-             
+                    <td>₹ {item.price}</td>
+                    <td>₹ {totalCartPrice}</td>
+      
                   </tr>
                 );
               })}
             </tbody>
          
           </table>
+
+          
         )
       })}
-      </div>
+      {/* </div> */}
     </Layout>
   );
 }

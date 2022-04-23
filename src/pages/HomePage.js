@@ -74,47 +74,71 @@ function HomePage() {
 
   return (
     <Layout loading={loading}>
-      <div className='container'>
-        <div className='row'>
+      <div className="container">
+        <div className="row">
           {products.map((product) => {
             console.log(product);
             return (
-              <div className='col-md-3'>
-                <div className='m-2 p-1 product position-relative'>
-                  <div className='product-content'>
+              <div className="col-md-3">
+                <div className="m-2 p-1 product position-relative">
+                  {/* <div className='product-content'>
                     <p>{product.name}</p>
-                  </div>
-                  <div className='text-center'>
+                  </div> */}
+                  {/* <div className='text-center'>
                     <img
                       src={product.imageURL}
                       alt=''
                       className='product-img'
                     />
-                  </div>
-
-                  <div className='product-actions'>
-                    <h2>Rs.{product.price}</h2>
-                    <div className='d-flex'>
-                      {/* <Button variant="outlined" onClick={() => addToCart({...product,quantity:1})}>ADD TO CART</Button> */}
+                  </div> */}
+                  {/* <div class="card"> */}
+                    <img
+                      src={product.imageURL}
+                      class="card-img-top"
+                      alt="..."
+                      height="220"
+                      width="200"
+                    />
+                    <div class="card-body" onClick={() => {
+                      navigate(`/productinfo/${product.id}`);
+                    }}>
+                      <h5 class="card-title">{product.name}</h5>
+                      <p class="card-text">₹ {product.price}</p>
+                    </div>
+                    <div class="card-header">
                       <button
-                        type='button'
-                        class='btn btn-outline-info'
+                        type="button"
+                        class="btn btn-outline-primary"
+                        onClick={() => addToCart(product)}
+                      >
+                        Add to Cart
+                      </button>
+                      </div>
+                  {/* </div> */}
+
+                  {/* <div className="product-actions">
+                    <h2>₹ {product.price}</h2>
+                    <div className="d-flex"> */}
+                      {/* <Button variant="outlined" onClick={() => addToCart({...product,quantity:1})}>ADD TO CART</Button> */}
+                      {/* <button
+                        type="button"
+                        class="btn btn-outline-info"
                         onClick={() => addToCart(product)}
                       >
                         ADD TO CART
                       </button>
                       &nbsp;&nbsp;&nbsp;
                       <button
-                        type='button'
-                        class='btn btn-outline-info'
+                        type="button"
+                        class="btn btn-outline-info"
                         onClick={() => {
                           navigate(`/productinfo/${product.id}`);
                         }}
                       >
                         VIEW
                       </button>
-                    </div>
-                  </div>
+                    </div> */}
+                  {/* </div> */}
                 </div>
               </div>
             );
