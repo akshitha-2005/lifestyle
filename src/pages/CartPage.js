@@ -7,7 +7,6 @@ import { async } from "@firebase/util";
 import firebaseDB from "../firebaseConfig";
 import { toast } from "react-toastify";
 import { Button } from "@mui/material";
-import { Link } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import StripeCheckout from "react-stripe-checkout";
 import { useNavigate } from "react-router-dom";
@@ -15,11 +14,6 @@ import { useNavigate } from "react-router-dom";
 function CartPage() {
   const { cartItems } = useSelector((state) => state.cartReducer);
   const navigate = useNavigate();
-  // const [name, setName] = useState("");
-  // const [address, setAddress] = useState("");
-  // const [city, setCity] = useState("");
-  // const [pincode, setPincode] = useState("");
-  // const [phoneNumber, setPhoneNumber] = useState("");
 
   const initialValues = {
     name: "",
@@ -95,14 +89,6 @@ function CartPage() {
 
   const [loading, setLoading] = useState(false);
 
-  // useEffect(() => {
-  //   let temp = 0;
-  //   cartItems.forEach((cartItem) => {
-  //     temp = temp + cartItem.price;
-  //   });
-  //   setTotalAmount(temp);
-  // }, [cartItems]);
-
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
@@ -146,7 +132,6 @@ function CartPage() {
       setLoading(false);
       toast.success("Order placed successfully");
       clearCart();
-      // window.location.href = "/home";
     } catch (error) {
       setLoading(false);
       toast.error("Order failed");
@@ -203,7 +188,7 @@ function CartPage() {
         <>
           <div className='d-flex justify-content-end p-4'>
               <div class="card-title total-amount">
-              <h5><strong>Total Price = ₹  {totalCartPrice}</strong></h5> 
+              <h5><strong>Total Amount: ₹ {totalCartPrice}</strong></h5> 
               </div>
           </div>
           <div className='d-flex justify-content-end p-4'>

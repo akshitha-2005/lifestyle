@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../components/Layout";
-import { collection, getDoc, doc } from "firebase/firestore";
+import { getDoc, doc } from "firebase/firestore";
 import firebaseDB from "../firebaseConfig";
 import { async } from "@firebase/util";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Button } from "@mui/material";
+
 function ProductInfo() {
   const [product, setProduct] = useState();
   const [loading, setLoading] = useState(false);
+
   const { cartItems } = useSelector((state) => state.cartReducer);
   const dispatch = useDispatch();
   const params = useParams();
@@ -16,14 +17,13 @@ function ProductInfo() {
   useEffect(() => {
     getData();
   }, []);
-
+  
   async function getData() {
     try {
       setLoading(true);
       const productTemp = await getDoc(
         doc(firebaseDB, "products", params.productid)
       );
-
       setProduct(productTemp.data());
       setLoading(false);
     } catch (error) {
@@ -31,9 +31,11 @@ function ProductInfo() {
       setLoading(false);
     }
   }
-
+  
   const addToCart = (product) => {
     let isProductAlredayAddedToCart = false;
+    console.log(params.productid);
+    console.log(cartItems);
     isProductAlredayAddedToCart = cartItems.filter(
       (cartItem) => cartItem.id === product.id
     ).length;
@@ -75,7 +77,7 @@ function ProductInfo() {
                   <button
                     type='button'
                     class='btn btn-outline-info'
-                    onClick={() => addToCart(product)}
+                    onClick={() => addToCart({...product,id:params.productid})}
                   >
                     ADD TO CART
                   </button>

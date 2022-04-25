@@ -2,20 +2,11 @@ import React, { useState, useEffect } from "react";
 import Layout from "../components/Layout";
 import { collection, addDoc, getDocs } from "firebase/firestore";
 import firebaseDB from "../firebaseConfig";
-import { fireproducts } from "../firecommerce";
 import { async } from "@firebase/util";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Button } from "@mui/material";
 
 function HomePage() {
-  // async function adddata() {
-  //     try{
-  //         await addDoc(collection(firebaseDB,"users"),{name: "Akshitha",age:22});
-  //     }catch(error){
-  //         console.log(error);
-  //     }
-  // }
   const [products, setProducts] = useState([]);
   const { cartItems } = useSelector((state) => state.cartReducer);
   const [loading, setLoading] = useState(false);
@@ -46,15 +37,6 @@ function HomePage() {
     }
   }
 
-  //     function addProductsData(){
-  //     fireproducts.map(async (product) =>{
-  //         try{
-  //             await addDoc(collection(firebaseDB,"products"),product);
-  //         }catch(error){
-  //             console.log(error);
-  //         }
-  //     })
-  // }
   useEffect(() => {
     localStorage.setItem("cartItems", JSON.stringify(cartItems));
   }, [cartItems]);
@@ -81,17 +63,9 @@ function HomePage() {
             return (
               <div className="col-md-3">
                 <div className="m-2 p-1 product position-relative">
-                  {/* <div className='product-content'>
-                    <p>{product.name}</p>
-                  </div> */}
-                  {/* <div className='text-center'>
-                    <img
-                      src={product.imageURL}
-                      alt=''
-                      className='product-img'
-                    />
-                  </div> */}
-                  {/* <div class="card"> */}
+                  <div class="card" onClick={() => {
+                      navigate(`/productinfo/${product.id}`);
+                    }}>
                     <img
                       src={product.imageURL}
                       class="card-img-top"
@@ -99,13 +73,13 @@ function HomePage() {
                       height="220"
                       width="200"
                     />
-                    <div class="card-body" onClick={() => {
-                      navigate(`/productinfo/${product.id}`);
-                    }}>
+                    <div class="card-body">
                       <h5 class="card-title">{product.name}</h5>
-                      <p class="card-text">₹ {product.price}</p>
+                      <p class="card-text">₹ <strong>{product.price}</strong></p>
                     </div>
-                    <div class="card-header">
+                    </div>
+
+                    <div class="cart">
                       <button
                         type="button"
                         class="btn btn-outline-primary"
@@ -114,41 +88,12 @@ function HomePage() {
                         Add to Cart
                       </button>
                       </div>
-                  {/* </div> */}
-
-                  {/* <div className="product-actions">
-                    <h2>₹ {product.price}</h2>
-                    <div className="d-flex"> */}
-                      {/* <Button variant="outlined" onClick={() => addToCart({...product,quantity:1})}>ADD TO CART</Button> */}
-                      {/* <button
-                        type="button"
-                        class="btn btn-outline-info"
-                        onClick={() => addToCart(product)}
-                      >
-                        ADD TO CART
-                      </button>
-                      &nbsp;&nbsp;&nbsp;
-                      <button
-                        type="button"
-                        class="btn btn-outline-info"
-                        onClick={() => {
-                          navigate(`/productinfo/${product.id}`);
-                        }}
-                      >
-                        VIEW
-                      </button>
-                    </div> */}
-                  {/* </div> */}
                 </div>
               </div>
             );
           })}
         </div>
       </div>
-
-      {/* <button onClick={adddata}>add data</button> */}
-
-      {/* <button onClick={addProductsData}>add data to firebase</button> */}
     </Layout>
   );
 }

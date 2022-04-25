@@ -54,7 +54,6 @@ const addUserData = async() =>{
             src="https://assets7.lottiefiles.com/packages/lf20_6wutsrox.json"
             background="transparent"
             speed="1"
-            // style="width: 300px; height: 300px;"
             loop
             autoplay
           ></lottie-player>

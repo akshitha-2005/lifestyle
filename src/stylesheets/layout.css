@@ -32,3 +32,10 @@
 .a{
     text-decoration: none;
 }
+.cart {
+    padding: 5px;
+    margin-left: 50px;
+}
+.card {
+    cursor: pointer;
+}

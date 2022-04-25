@@ -1,8 +1,5 @@
 export const fireproducts = [
-    // {
-    //   id: 3,
-    //   title: 'Jackets',
-    //   items: [
+    
         {
         
           name: 'Black Jean Shearling',
@@ -38,12 +35,7 @@ export const fireproducts = [
           price: 185,
           quantity : 1,
         },
-    //   ],
-    // },
-    // {
-    //   id: 4,
-    //   title: 'Womens',
-    //   items: [
+    
         {
           
           name: 'Blue Tanktop',
@@ -93,12 +85,7 @@ export const fireproducts = [
           price: 20,
           quantity : 1,
         },
-    //   ],
-    // },
-    // {
-    //   id: 5,
-    //   title: 'Mens',
-    //   items: [
+   
         {
           
           name: 'Camo Down Vest',

@@ -42,7 +42,7 @@ function OrdersPage() {
  
   return (
      <Layout loading={loading}>
-       {/* <div className=""> */}
+     
          <div className="card-title order-details">
             <h4><strong>Order Details</strong></h4>
        </div>
@@ -89,7 +89,7 @@ function OrdersPage() {
           
         )
       })}
-      {/* </div> */}
+    
     </Layout>
   );
 }
