@@ -76,10 +76,10 @@ function ProductInfo() {
                 <div className='d-flex justify-content-end my-3'>
                   <button
                     type='button'
-                    class='btn btn-outline-info'
+                    class='btn btn-outline-primary'
                     onClick={() => addToCart({...product,id:params.productid})}
                   >
-                    ADD TO CART
+                    Add to Cart
                   </button>
                 </div>
               </div>

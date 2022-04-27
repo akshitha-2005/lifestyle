@@ -1,121 +1,148 @@
-import React, { useState } from "react";
-import { Button } from "@mui/material";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { Button } from "@mui/material";
 import Loader from '../components/Loader';
 import { toast } from "react-toastify";
 import firebaseDB from "../firebaseConfig";
 import { addDoc, collection } from "firebase/firestore";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 function RegisterPage() {
-  const [name,setName ] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [cpassword, setCPassword] = useState("");
+  const initialValues = { username: "", email: "", password: "" };
+  const [formValues, setFormValues] = useState(initialValues);
+  const [formErrors, setFormErrors] = useState({});
+  const [isSubmit, setIsSubmit] = useState(false);
   const [loading, setLoading] = useState(false);
   const auth = getAuth();
 
-const addUserData = async() =>{
-       const user = {name,email}
-            try{
-                await addDoc(collection(firebaseDB,"users"),user);
-            }catch(error){
-                console.log(error);
-            }
-        
+  const addUserData = async() =>{
+    const user = {formValues}
+         try{
+             await addDoc(collection(firebaseDB,"users"),user);
+         }catch(error){
+             console.log(error);
+         }
+     
+ }
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormValues({ ...formValues, [name]: value });
+  };
+
+
+
+  useEffect(() => {
+    console.log(formErrors);
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      console.log(formValues);
     }
-  const register=async() => {
+  }, [formErrors]);
+  const validate = (values) => {
+    const errors = {};
+    const regexName = /^[آ-یA-z]{2,}( [آ-یA-z]{1,})+([آ-یA-z]|[ ]?)$/;
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+
+    if (!values.username) {
+      errors.username = "Full Name is required!";
+    } else if (!regexName.test(values.username)){
+        errors.username = "Invalid full name!"
+    }
+    if (!values.email) {
+      errors.email = "Email is required!";
+    } else if (!regex.test(values.email)) {
+      errors.email = "Invalid email format!";
+    }
+    if (!values.password) {
+      errors.password = "Password is required";
+    } else if (values.password.length < 5) {
+      errors.password = "Password must be more than 5 characters";
+    } else if (values.password.length > 15) {
+      errors.password = "Password cannot exceed more than 15 characters";
+    }
+    return errors;
+  };
+
+  const handleSubmit=async(e) => {
+      e.preventDefault();
+      setFormErrors(validate(formValues));
     try {
       setLoading(true)
-      const result = await createUserWithEmailAndPassword(auth,email,password)
+      const result = await createUserWithEmailAndPassword(auth,formValues.email,formValues.password);
       console.log(result)
       setLoading(false)
-      toast.success('Registration successfull')
+      setIsSubmit(true);
+      toast.success('Registered successfully!')
       addUserData()
-      setName('')
-      setEmail('')
-      setPassword('')
-      setCPassword('')
     } catch (error) {
       console.log(error)
-      toast.error('Registration failed')
+      toast.error('Registration failed!')
       setLoading(false)
     }
   }
+
   return (
     <div className="register-parent">
-      {loading && (<Loader />)}
-      <div className="register-top">
+    {loading && (<Loader />)}
+    <div className="register-top">
 
+    </div>
+    <div className="row justify-content-center">
+      <div className="col-md-5">
+        <lottie-player
+          src="https://assets7.lottiefiles.com/packages/lf20_6wutsrox.json"
+          background="transparent"
+          speed="1"
+          loop
+          autoplay
+        ></lottie-player>
       </div>
-      <div className="row justify-content-center">
-        <div className="col-md-5">
-          <lottie-player
-            src="https://assets7.lottiefiles.com/packages/lf20_6wutsrox.json"
-            background="transparent"
-            speed="1"
-            loop
-            autoplay
-          ></lottie-player>
-        </div>
-        <div className="col-md-4 z1">
-          <div className="register-form">
-            <h2>Sign up</h2>
-
-            <hr />
-
-            
+      <div className="col-md-4 z1">
+        <div className="register-form">
+          <h2>Register</h2>
+          <hr />
             <input
               type="text"
-              required
+              name="username"
               className="form-control"
               placeholder="Name"
-              value={name}
-              onChange={(e) => {
-                setName(e.target.value);
-              }}
+              value={formValues.username}
+              onChange={handleChange}
             />
+    
+          <p style={{ color: "red" }}>{formErrors.username}</p>
 
             <input
-              type="text"
-              required
+              type="email"
+              name="email"
               className="form-control"
               placeholder="Email"
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
+              value={formValues.email}
+              onChange={handleChange}
             />
+          
+          <p style={{ color: "red" }}>{formErrors.email}</p>
+           
             <input
               type="password"
-              required
+              name="password"
               className="form-control"
               placeholder="Password"
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
+              value={formValues.password}
+              onChange={handleChange}
             />
-            <input
-              type="password"
-              required
-              className="form-control"
-              placeholder="Confirm Password"
-              value={cpassword}
-              onChange={(e) => {
-                setCPassword(e.target.value);
-              }}
-            />
-
-            <Button className="my-3" variant="contained" color="success" onClick={register}>
+          <p style={{ color: "red" }}>{formErrors.password}</p>
+          <Button className="my-3" variant="contained" color="success" onClick={handleSubmit}>
               REGISTER
             </Button>
             <hr />
-            <Link to='/login' className="btn btn-primary">Click Here To Login</Link>
-          </div>
+            <p>Already have an account?</p>
+            <Link to='/login' className="btn btn-primary">Login</Link>
         </div>
-      </div>
-    </div>
+     </div>
+     </div>
+     </div>
+    
   );
 }
 

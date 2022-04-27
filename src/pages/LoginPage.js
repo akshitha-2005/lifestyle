@@ -81,12 +81,12 @@ function LoginPage() {
             >
               LOGIN
             </Button>
-            <hr />
            
-
-            <Button variant="contained" onClick={signInWithGoogle}>Sign in with Google</Button>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        
+
+            <Button variant="contained" color="primary" onClick={signInWithGoogle}>Sign in with Google</Button>
+             <hr />
+             <p>Don't have an account?</p>
             <Link to="/" className="btn btn-primary">
                   REGISTER
                 </Link>
