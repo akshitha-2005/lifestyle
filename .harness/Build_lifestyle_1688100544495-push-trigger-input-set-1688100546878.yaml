@@ -1,0 +1,14 @@
+inputSet:
+  name: Build_lifestyle_1688100544495-push-trigger-input-set
+  identifier: Build_lifestyle_1688100544495pushtriggerinputset
+  orgIdentifier: default
+  projectIdentifier: default_project
+  pipeline:
+    identifier: Build_lifestyle_1688100544495
+    properties:
+      ci:
+        codebase:
+          build:
+            type: branch
+            spec:
+              branch: <+trigger.branch>
